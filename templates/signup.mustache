@@ -1,0 +1,198 @@
+{{!
+    This file is part of The Alternatelogin local
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_alternatelogin/signup
+
+    Block template for displaying the sharedresources tool list
+
+    Classes required for JS:
+    * none
+
+    Context variables required for this template:
+    * undocumented @see block's renderer for reference
+}}
+<!-- local_alternatelogin/signup -->
+<div id="custommenu">
+<div id="custommenu-inner">
+{{{custommenu}}}
+</div>
+</div>
+
+<div id="extra-div-1">{{{extra1text}}}</div>
+<div id="extra-div-2">{{{extra2text}}}</div>
+
+<div id="signup-page" class="alternate-page">
+
+    {{#extracss}}
+    <style>{{{extracss}}}</style>
+    {{/extracss}}
+
+    <div id="alternate-login-content">
+
+        <div class="signup">
+
+            {{#errorglobals}}
+            <div class="global-errors form-error">
+            {{{errorglobals}}}
+            </div>
+            {{/errorglobals}}
+
+            <form name="signup-form" action="{{{signupurl}}}" method="POST" autocomplete="off">
+                <input type="hidden" name="auth" value="{{defaultauth}}" />
+                <fieldset id="sign-up-panel-1" class="form-panel">
+                <legend>{{#str}}newaccount, local_alternatelogin{{/str}}</legend>
+
+                    <div class="form-element">
+                        {{#erroremail}}
+                        <div class="form-error">{{erroremail}}</div>
+                        {{/erroremail}}
+                        <div class="form-field {{erroremailclass}}">
+                            <div id="email-field-cpy-check" class="email-field-cpy-check field-cpy-check unchecked">
+                                {{#pix}}nook, local_alternatelogin{{/pix}}
+                                <input type="text" name="email" value="{{email}}"
+                                placeholder="{{#str}}email{{/str}}"
+                                onpaste="alert('{{#str}}nopaste, local_alternatelogin{{/str}}');return false;"
+                                 />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-element">
+                        {{#erroremailconfirm}}
+                        <div class="form-error">{{erroremailconfirm}}</div>
+                        {{/erroremailconfirm}}
+                        <div class="form-field {{erroremailconfirmclass}}">
+                            <div id="emailconfirm-field-cpy-check" class="email-field-cpy-check field-cpy-check unchecked">
+                                {{#pix}}nook, local_alternatelogin{{/pix}}
+                                <input type="text" name="emailconfirm" value="{{emailconfirm}}"
+                                       placeholder="{{#str}}emailconfirm, local_alternatelogin{{/str}}"
+                                       onpaste="alert('{{#str}}nopaste, local_alternatelogin{{/str}}');return false;"
+                                       />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-element">
+                        {{#errorpassword}}
+                        <div class="form-error">{{errorpassword}}</div>
+                        {{/errorpassword}}
+                        <div class="smalltext">{{{passwordpolicy}}}</div>
+                        <div class="form-field {{errorpasswordclass}}">
+                            <div id="password-field-cpy-check" class="password-field-cpy-check field-cpy-check unchecked">
+                            {{#pix}}nook, local_alternatelogin{{/pix}}
+                            <input type="password" name="password" value="{{password}}"
+                                   placeholder="{{#str}}password{{/str}}"
+                                   onpaste="alert('{{#str}}nopaste, local_alternatelogin{{/str}}');return false;"
+                                   />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-element">
+                        {{#errorpasswordconfirm}}
+                        <div class="form-error">{{errorpasswordconfirm}}</div>
+                        {{/errorpasswordconfirm}}
+                        <div class="form-field {{errorpasswordconfirmclass}}">
+                            <div id="passwordconfirm-field-cpy-check" class="password-field-cpy-check field-cpy-check unchecked">
+                            {{#pix}}nook, local_alternatelogin{{/pix}}
+                            <input type="password" name="passwordconfirm" value="{{passwordconfirm}}"
+                                   placeholder="{{#str}}confirmpassword, local_alternatelogin{{/str}}"
+                                   onpaste="{{#str}}nopaste, local_alternatelogin{{/str}}');return false;"
+                                   />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-element">
+                        {{#errorfirstname}}
+                        <div class="form-error">{{errorfirstname}}</div>
+                        {{/errorfirstname}}
+                        <div class="form-field {{errorfirstnameclass}}">
+                            <input type="text" name="firstname" value="{{firstname}}" placeholder="{{#str}}firstname{{/str}}" class="field-non-empty-input unchecked">
+                        </div>
+                    </div>
+
+                    <div class="form-element">
+                        {{#errorlastname}}
+                        <div class="form-error">{{errorlastname}}</div>
+                        {{/errorlastname}}
+                        <div class="form-field {{errorlastnameclass}}">
+                            <input type="text" name="lastname" value="{{lastname}}" placeholder="{{#str}}lastname{{/str}}" class="field-non-empty-input unchecked">
+                        </div>
+                    </div>
+
+                    {{#countryselect}}
+                    <div class="form-field">
+                        <div class="field-label">
+                            {{#str}}country{{/str}}
+                        </div>
+                        <div class="field-input">
+                            {{{countryselect}}}
+                        </div>
+                    </div>
+                    {{/countryselect}}
+
+                    <div class="form-field">
+                        <div class="field-flow">
+                            <input id="next-step-2" type="button" name="step2" value="{{#str}}next{{/str}}" class="nav-button pull-right">
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset id="sign-up-panel-2" class="form-panel hidden">
+
+                    {{#profilefield}}
+                        <input type="hidden" id="pv-{{i}}" name="{{profilefieldkey}}" value="{{value}}" class="alternate-profile-field {{profileunchecked}}">
+                        {{#profilevalue}}
+                        <div class="form-field profile">
+                            <div class="field-input">
+                                <input type="button" name="pv{{i}}btn" style="size: 30em" id="pv-choice-btn-{{i}}-{{j}}" data-value="{{datavalue}}" value="{{label}}" class="alternate-profile-choice {{selectedclass}}">
+                            </div>
+                        </div>
+                        {{/profilevalue}}
+                    {{/profilefield}}
+
+                    {{#withcapcha}}
+                    <div class="form-field">
+                        {{#errorcapcha}}
+                        <div class="form-error">{{errorcapcha}}</div>
+                        {{/errorcapcha}}
+                        <div class="signup-captcha {{errorcapchaclass}}">
+                            <img src="{{{generatorurl}}}" />
+                            <input type="text" class="field-non-empty-input unchecked" name="capcha" size="6" placeholder="{{#str}}captchainstr, local_alternatelogin{{/str}}" />
+                        </div />
+                    </div>
+                    {{/withcapcha}}
+
+                    <div class="form-field">
+                        <div class="field-submit pull-left">
+                            <input id="back-step-1" type="button" name="step1" value="{{#str}}back{{/str}}" class="nav-button">
+                        </div>
+                        <div class="field-submit pull-right">
+                            <input id="next-step-3" type="button" name="step2" value="{{#str}}send, local_alternatelogin{{/str}}" class="nav-button" {{step3disabled}}>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="extra-div-3">{{{extra3text}}}</div>
+<div id="extra-div-4">{{{extra4text}}}</div>
+
+<!-- /local_alternatelogin/signup -->

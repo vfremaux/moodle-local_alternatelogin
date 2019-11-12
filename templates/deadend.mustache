@@ -1,0 +1,53 @@
+{{!
+    This file is part of The Alternatelogin local
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_alternatelogin/login
+
+    Block template for displaying the sharedresources tool list
+
+    Classes required for JS:
+    * none
+
+    Context variables required for this template:
+    * undocumented @see block's renderer for reference
+}}
+<!-- local_alternatelogin/deadend -->
+<div id="custommenu">
+<div id="custommenu-inner">
+{{{custommenu}}}
+</div>
+</div>
+<div id="deadend-page" class="alternate-page">
+
+    {{#extracss}}
+    <style>{{{extracss}}}</style>
+    {{/extracss}}
+
+    <div id="alternate-deadend-content">
+
+        <div id="sign-in-deadend" class="deadend form-panel">
+            <div id="sign-in-deadend-head">
+            <h3>{{#str}}accountcreated, local_alternatelogin{{/str}}</h3>
+            </div>
+            <div id="sign-in-deadend-instructions">
+                {{#str}}confirminstructions, local_alternatelogin, {{usermail}}{{/str}}
+            </div>
+        </div>
+
+     </div>
+</div>
+<!-- /local_alternatelogin/deadend -->
