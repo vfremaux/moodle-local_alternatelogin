@@ -119,6 +119,22 @@ function local_alternatelogin_validate($user) {
         $errors['email'] = get_string('errorempty', 'local_alternatelogin');
     }
 
+    if (!empty($config->accepteddomains)) {
+        $domainlist = explode(',', $config->accepteddomains);
+        $pass = false;
+        foreach ($domainlist as $domain) {
+            $domain = trim($domain);
+            if (preg_match('/'.$domain.'$/', $user->email)) {
+                $pass = true;
+                break;
+            }
+        }
+
+        if ($pass == false) {
+            $errors['email'] = get_string('errornotinvaliddomains', 'local_alternatelogin');
+        }
+    }
+
     if (empty($user->firstname)) {
         $errors['firstname'] = get_string('errorempty', 'local_alternatelogin');
     }

@@ -21,8 +21,11 @@ $string['pluginname'] = 'P&aacute;gina de connecci&oacute;n alternativa';
 $string['alternatelogin'] = 'P&aacute;gina de connecci&oacute;n alternativa';
 $string['alternatelogin_help'] = '<a href="{$a}">Voir la page de connexion</a>';
 
+$string['appearance'] = 'Aspecto gr&aacute;fico';
+$string['configaccepteddomains'] = 'Dominios de correo autorizados';
+$string['configaccepteddomains_desc'] = '';
 $string['configenabled'] = 'Activo';
-$string['configenabled_desc'] = 'Si désactivé, les pages accessibles de ce plugin ne fonctionneront pas.';
+$string['configenabled_desc'] = 'Si desactivado, este plugin no functionar&aacute;.';
 $string['configrendererimages'] = 'Images pour la mise en page';
 $string['configrendererimages_desc'] = 'Une collection d\'images qui peuvent être appelées dans les CSS supplémentaires, avec des balises {{#pluginfile}}<nomfichier>{{/pluginfile}}';
 $string['configextracss'] = 'Complemento CSS';
@@ -66,6 +69,7 @@ Pour confirmer votre compte, Rendez vous sur le lien suivant et suivez les instr
 ';
 
 $string['errorempty'] = 'Esta endrada no puede ser vacia';
+$string['errornotinvaliddomains'] = 'Su correo necesita ser en un dominio acceptado';
 $string['errornomatch'] = 'Las entradas no corresponden';
 $string['errorexists'] = 'Una cuenta existe con esta dirrecci&oacute;n.';
 $string['errorexistsinternal'] = 'Esta dirrecci&oacute;n electr&oacute;nica esta usada ya.';

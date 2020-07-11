@@ -75,6 +75,8 @@ class local_alternatelogin_renderer extends plugin_renderer_base {
             unset($SESSION);
         }
 
+        $template->loginindexurl = new moodle_url('/login/index.php');
+
         return $this->output->render_from_template('local_alternatelogin/login', $template);
     }
 
@@ -102,48 +104,50 @@ class local_alternatelogin_renderer extends plugin_renderer_base {
         // TODO : extend.
 
         $template->defaultauth = $config->resultingauthmethod;
-        $template->profilefield = true;
-        $profilevalues = $DB->get_field('user_info_field', 'param1', array('id' => $config->profilefield));
-        $template->profilefieldkey = 'profile_field_';
-        $params = array('id' => $config->profilefield);
-        $template->profilefieldkey .= core_text::strtolower($DB->get_field('user_info_field', 'shortname', $params));
-        $profilevalues = explode("\n", $profilevalues);
+        if (!empty($config->profilefield)) {
+            $template->profilefield = true;
+            $profilevalues = $DB->get_field('user_info_field', 'param1', array('id' => $config->profilefield));
+            $template->profilefieldkey = 'profile_field_';
+            $params = array('id' => $config->profilefield);
+            $template->profilefieldkey .= core_text::strtolower($DB->get_field('user_info_field', 'shortname', $params));
+            $profilevalues = explode("\n", $profilevalues);
 
-        $profilefieldkey = $template->profilefieldkey;
+            $profilefieldkey = $template->profilefieldkey;
 
-        $i = 1;
-        $j = 1;
-        $template->i = $i;
+            $i = 1;
+            $j = 1;
+            $template->i = $i;
 
-        if (empty($frm->$profilefieldkey)) {
-            $template->step3disabled = 'disabled="disabled"';
-        }
-
-        $haschecked = false;
-
-        foreach ($profilevalues as $pv) {
-            if (!empty(trim($pv))) {
-                $profilevaluetpl = new StdClass;
-                $profilevaluetpl->datavalue = $pv;
-                $profilevaluetpl->j = $j;
-                if (isset($frm->$profilefieldkey)  && ($frm->$profilefieldkey == $pv)) {
-                    $profilevaluetpl->selectedclass = 'selected';
-                    $haschecked = true;
-                    $profilevaluetpl->value = $pv;
-                } else {
-                    $profilevaluetpl->selectedclass = '';
-                    $profilevaluetpl->value = '';
-                }
-                $profilevaluetpl->label = format_string($pv);
-                $template->profilevalue[] = $profilevaluetpl;
+            if (empty($frm->$profilefieldkey)) {
+                $template->step3disabled = 'disabled="disabled"';
             }
-            $j++;
-        }
 
-        if ($haschecked) {
-            $template->profileunchecked = '';
-        } else {
-            $template->profileunchecked = 'unchecked';
+            $haschecked = false;
+
+            foreach ($profilevalues as $pv) {
+                if (!empty(trim($pv))) {
+                    $profilevaluetpl = new StdClass;
+                    $profilevaluetpl->datavalue = $pv;
+                    $profilevaluetpl->j = $j;
+                    if (isset($frm->$profilefieldkey)  && ($frm->$profilefieldkey == $pv)) {
+                        $profilevaluetpl->selectedclass = 'selected';
+                        $haschecked = true;
+                        $profilevaluetpl->value = $pv;
+                    } else {
+                        $profilevaluetpl->selectedclass = '';
+                        $profilevaluetpl->value = '';
+                    }
+                    $profilevaluetpl->label = format_string($pv);
+                    $template->profilevalue[] = $profilevaluetpl;
+                }
+                $j++;
+            }
+
+            if ($haschecked) {
+                $template->profileunchecked = '';
+            } else {
+                $template->profileunchecked = 'unchecked';
+            }
         }
 
         if (!empty($config->noheader)) {
@@ -178,6 +182,8 @@ class local_alternatelogin_renderer extends plugin_renderer_base {
             $template->generatorurl = $generatorurl;
             $template->withcapcha = true;
         }
+
+        $template->signupurl = new moodle_url('/local/alternatelogin/signup.php');
 
         return $this->output->render_from_template('local_alternatelogin/signup', $template);
     }

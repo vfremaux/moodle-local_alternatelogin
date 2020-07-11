@@ -53,11 +53,6 @@ body {
 
 /* form styling */
 
-#page-local-alternatelogin-login,
-#page-local-alternatelogin-login * {
-    font-family: OpenSans, "Arial", sans-serif;
-}
-
 #page-local-alternatelogin-login #page {
     background: none;
 }
@@ -76,7 +71,6 @@ body {
 .alternate-page  .deadend,
 .alternate-page  .signup,
 .alternate-page  .welcome {
-    background: #f4f7f8;
     margin: 10px auto;
     padding: 20px;
 }
@@ -151,12 +145,11 @@ body {
     -moz-box-sizing: border-box; 
     -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     -webkit-box-sizing: border-box;
-    background-color: #e8eeef;
+    background-color: #fff;
     border: none;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     box-sizing: border-box;
-    color:#8a97a0;
-    font-family: Georgia, "Times New Roman", Times, serif;
+    color:#888;
     font-size: 15px;
     margin: 0;
     margin-bottom: 30px;
@@ -177,8 +170,9 @@ body {
 .alternate-page  .signup input[type="url"]:focus,
 .alternate-page  .signup textarea:focus,
 .alternate-page  .signup select:focus{
-    background: #d2d9dd;
+    background: #ddd;
 }
+
 .alternate-page  .signup select {
     -webkit-appearance: menulist-button;
     height: 35px;
@@ -333,7 +327,7 @@ form[name="login"] {
     opacity: 0.2;
 }
 
-.notloggedin .usermenu {
+#page-local-alternatelogin-login .notloggedin .usermenu {
     height: 0px;
     visibility: hidden;
     width: 40px;

@@ -265,7 +265,7 @@ if ($frm and isset($frm->username)) {                             // Login WITH 
 
     } else {
         // CHANGE+
-        if ($DB->record_exists('user', array('username', $frm->username)) {
+        if ($DB->record_exists('user', array('username', $frm->username))) {
             $errorcode = 6;
         } else {
             if (empty($errormsg)) {

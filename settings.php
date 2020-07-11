@@ -36,12 +36,6 @@ if ($hassiteconfig) {
     $desc = get_string('configenabled_desc', 'local_alternatelogin');
     $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
 
-    $key = 'local_alternatelogin/rendererimages';
-    $label = get_string('configrendererimages', 'local_alternatelogin');
-    $desc = get_string('configrendererimages_desc', 'local_alternatelogin');
-    $options = array('subdirs' => false, 'maxfiles' => 20);
-    $settings->add(new admin_setting_configstoredfile($key, $label, $desc, 'rendererimages', 0, $options));
-
     $key = 'local_alternatelogin/welcometext';
     $label = get_string('configwelcometext', 'local_alternatelogin');
     $desc = get_string('configwelcometext_desc', 'local_alternatelogin');
@@ -97,16 +91,6 @@ if ($hassiteconfig) {
     $desc = get_string('configloginusesmail_desc', 'local_alternatelogin');
     $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 0));
 
-    $key = 'local_alternatelogin/extracss';
-    $label = get_string('configextracss', 'local_alternatelogin');
-    $desc = get_string('configextracss_desc', 'local_alternatelogin');
-    $settings->add(new admin_setting_configtextarea($key, $label, $desc, ''));
-
-    $key = 'local_alternatelogin/stylesheets';
-    $label = get_string('configstylesheets', 'local_alternatelogin');
-    $desc = get_string('configstylesheets_desc', 'local_alternatelogin');
-    $settings->add(new admin_setting_configtext($key, $label, $desc, ''));
-
     $fields = $DB->get_records_menu('user_info_field', array('datatype' => 'menu'), 'name');
     if (!empty($fields)) {
         $key = 'local_alternatelogin/profilefield';
@@ -126,6 +110,29 @@ if ($hassiteconfig) {
         }
         $settings->add(new admin_setting_configselect($key, $label, $desc, 'email', $authoptions));
     }
+
+    $key = 'local_alternatelogin/accepteddomains';
+    $label = get_string('configaccepteddomains', 'local_alternatelogin');
+    $desc = get_string('configaccepteddomains_desc', 'local_alternatelogin');
+    $settings->add(new admin_setting_configtext($key, $label, $desc, ''));
+
+    $settings->add(new admin_setting_heading('alternatelogin_apparearance', get_string('appearance', 'local_alternatelogin'), ''));
+
+    $key = 'local_alternatelogin/rendererimages';
+    $label = get_string('configrendererimages', 'local_alternatelogin');
+    $desc = get_string('configrendererimages_desc', 'local_alternatelogin');
+    $options = array('subdirs' => false, 'maxfiles' => 20);
+    $settings->add(new admin_setting_configstoredfile($key, $label, $desc, 'rendererimages', 0, $options));
+
+    $key = 'local_alternatelogin/extracss';
+    $label = get_string('configextracss', 'local_alternatelogin');
+    $desc = get_string('configextracss_desc', 'local_alternatelogin');
+    $settings->add(new admin_setting_configtextarea($key, $label, $desc, ''));
+
+    $key = 'local_alternatelogin/stylesheets';
+    $label = get_string('configstylesheets', 'local_alternatelogin');
+    $desc = get_string('configstylesheets_desc', 'local_alternatelogin');
+    $settings->add(new admin_setting_configtext($key, $label, $desc, ''));
 
     $key = 'local_alternatelogin/noheader';
     $label = get_string('confignoheader', 'local_alternatelogin');

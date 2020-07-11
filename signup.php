@@ -124,6 +124,8 @@ if (!empty($errors['email'])) {
     $frm->emailconfirm = '';
 }
 
+$frm->confirmed = 0;
+
 echo $renderer->render_signup_form($frm, $errors);
 
 if (empty($config->nofooter)) {
