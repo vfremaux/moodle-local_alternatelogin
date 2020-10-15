@@ -115,6 +115,17 @@ function local_alternatelogin_validate($user) {
 
     $errors = false;
 
+    if (!empty($config->signupcode)) {
+        if (empty($user->signupcode)) {
+            $errors['signupcode'] = get_string('erroremptysignupcode', 'local_alternatelogin');
+        }
+
+        if ($user->signupcode != $config->signupcode) {
+            $errors['signupcode'] = get_string('errorwrongsignupcode', 'local_alternatelogin');
+        }
+        unset($user->signupcode);
+    }
+
     if (empty($user->email)) {
         $errors['email'] = get_string('errorempty', 'local_alternatelogin');
     }

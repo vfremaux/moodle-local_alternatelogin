@@ -54,7 +54,13 @@ $string['configstylesheets_desc'] = 'A comma separated list of usefull styleshee
 $string['configwelcometext'] = 'Welcome text';
 $string['configwelcometext_desc'] = 'Welcome text. If empty, will remove panel.';
 $string['configwithcapcha'] = 'Use capcha';
-$string['configwithcapcha_desc'] = 'If enables adds a cpacha at the end of the signup process.';
+$string['configwithcapcha_desc'] = 'If enabled, adds a capcha at the end of the signup process.';
+$string['configwithcountry'] = 'Use country';
+$string['configwithcountry_desc'] = 'If enabled, adds the country selection field, otherwise affects the site wide country default.';
+$string['configsignupcode'] = 'Signup code';
+$string['configsignupcode_desc'] = 'If set, adds a verification code to the signup form to block unexpected users.';
+$string['configcivilityfield'] = 'Cvilility field';
+$string['configcivilityfield_desc'] = 'A custom profile field that stores civility. Civility is NOT proposed if not set.';
 $string['confirmpassword'] = 'Password (confirmation)';
 $string['defaultlogin'] = 'john.doe@gmail.com';
 $string['dologin'] = 'Log in';
@@ -67,6 +73,8 @@ $string['errorexists'] = 'Email is already used.';
 $string['errorexistsinternal'] = 'This email is used by and internal account.';
 $string['errormalformed'] = 'email is malformed.';
 $string['errornomatch'] = 'Values do not match';
+$string['erroremptysignupcode'] = 'A signup autorisation code is required';
+$string['errorwrongsignupcode'] = 'The given signup autorisation code does not match.';
 $string['errorpasswordpolicy'] = 'The password does not match the policy';
 $string['login'] = 'login';
 $string['loginerror1'] = '<span data-error=\"{$a->error}\">Cookies cannot be used. Session cannot be stored in your browser.</span>';
@@ -77,7 +85,9 @@ $string['loginerror5'] = '<span data-error=\"{$a->error}\">User is not authorise
 $string['loginerror6'] = '<span data-error=\"{$a->error}\">User has no account.</span>';
 $string['loginerror99'] = '<span data-error=\"{$a->error}\">Other error (error ID \'{$a->error}\').</span>';
 $string['loginoremail'] = 'login (or email)';
-$string['mydashboard'] = 'My dashbord';
+$string['mydashboard'] = 'My dashboard';
+$string['mr'] = 'Mr';
+$string['mrs'] = 'Mrs';
 $string['newaccount'] = 'New account';
 $string['newuser'] = 'New user';
 $string['nopaste'] = 'Copy/paste are disabled on these fields';
@@ -85,9 +95,11 @@ $string['pluginname'] = 'Alternate login page';
 $string['send'] = 'Create the account';
 $string['signin'] = 'Sign in';
 $string['signup'] = 'Sign up';
+$string['signupcode'] = 'Enter the signup code';
 $string['sitealternatename'] = 'Learning site';
 $string['tosignin'] = 'Go to Sign in';
 $string['tosignup'] = 'Go to Sign up';
+$string['unset'] = '-- Unset --';
 
 $string['emailconfirmationsubject'] = '{$a} - Confirm your account';
 $string['confirminstructions'] = '

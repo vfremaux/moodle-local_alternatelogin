@@ -22,7 +22,7 @@
  * @package    local_advancedperfs
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-define(['jquery', 'core/log'], function($, log) {
+define(['jquery', 'core/config', 'core/log'], function($, cfg, log) {
 
     var alternatelogin = {
 
@@ -34,6 +34,7 @@ define(['jquery', 'core/log'], function($, log) {
             $('.field-cpy-check input').bind('keyup', this.checkfieldcopy);
             $('input.field-non-empty-input').bind('keyup', this.checknonempty);
             $('select.field-non-empty-input').bind('change', this.checknonempty);
+            $('#id-field-authcode-input').bind('change', this.checkauthcode);
 
             $('.field-cpy-check input').trigger('keyup');
             $('input.field-non-empty-input').trigger('keyup');
@@ -69,6 +70,23 @@ define(['jquery', 'core/log'], function($, log) {
             }
             alternatelogin.updatebutton2state();
             alternatelogin.updatebutton3state();
+        },
+
+        checkauthcode: function() {
+
+            var that = $(this);
+
+            var url = cfg.wwwroot.'/local/alternatelogin/ajax/service.php';
+            url += '?what=checkcode';
+            url += '&code=' + that.val();
+
+            $.get(url, function(data) {
+                if (data.result === 1) {
+                    $('#id-field-authcode-field').removeClass('error');
+                } else {
+                    $('#id-field-authcode-field').addClass('error');
+                }
+            }, 'json');
         },
 
         switchtopanel2: function() {

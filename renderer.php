@@ -87,6 +87,10 @@ class local_alternatelogin_renderer extends plugin_renderer_base {
 
         $config = get_config('local_alternatelogin');
 
+        if (!empty($config->signupcode)) {
+            $template->requiresignupcode = true;
+        }
+
         $template->extra1text = format_text(@$config->extra1text, FORMAT_MOODLE);
         $template->extra2text = format_text(@$config->extra2text, FORMAT_MOODLE);
         $template->extra3text = format_text(@$config->extra3text, FORMAT_MOODLE);
@@ -100,53 +104,75 @@ class local_alternatelogin_renderer extends plugin_renderer_base {
             $template->extracss = $config->extracss;
         }
 
-        // At the moment only setup for one profile field.
-        // TODO : extend.
-
         $template->defaultauth = $config->resultingauthmethod;
-        if (!empty($config->profilefield)) {
-            $template->profilefield = true;
-            $profilevalues = $DB->get_field('user_info_field', 'param1', array('id' => $config->profilefield));
-            $template->profilefieldkey = 'profile_field_';
-            $params = array('id' => $config->profilefield);
-            $template->profilefieldkey .= core_text::strtolower($DB->get_field('user_info_field', 'shortname', $params));
-            $profilevalues = explode("\n", $profilevalues);
 
-            $profilefieldkey = $template->profilefieldkey;
+        // Profile fields. Up to three
+        for ($i = 0; $i < 3; $i++) {
 
-            $i = 1;
-            $j = 1;
-            $template->i = $i;
+            $fieldkey = 'profilefield'.$i;
 
-            if (empty($frm->$profilefieldkey)) {
-                $template->step3disabled = 'disabled="disabled"';
-            }
+            if (!empty($config->$fieldkey)) {
 
-            $haschecked = false;
-
-            foreach ($profilevalues as $pv) {
-                if (!empty(trim($pv))) {
-                    $profilevaluetpl = new StdClass;
-                    $profilevaluetpl->datavalue = $pv;
-                    $profilevaluetpl->j = $j;
-                    if (isset($frm->$profilefieldkey)  && ($frm->$profilefieldkey == $pv)) {
-                        $profilevaluetpl->selectedclass = 'selected';
-                        $haschecked = true;
-                        $profilevaluetpl->value = $pv;
-                    } else {
-                        $profilevaluetpl->selectedclass = '';
-                        $profilevaluetpl->value = '';
-                    }
-                    $profilevaluetpl->label = format_string($pv);
-                    $template->profilevalue[] = $profilevaluetpl;
+                $field = $DB->get_record('user_info_field', array('id' => $config->$fieldkey));
+                if (!$field) {
+                    continue;
                 }
-                $j++;
-            }
 
-            if ($haschecked) {
-                $template->profileunchecked = '';
-            } else {
-                $template->profileunchecked = 'unchecked';
+                $profilefieldtpl = new StdClass;
+                $profilefieldtpl->i = $i;
+
+                // Computes the html name of the form field.
+                $shortname = core_text::strtolower($field->shortname);
+                $profilefieldtpl->profilefieldname = format_string($field->name);
+                $profilefieldtpl->profilefieldkey = 'profile_field_'.$shortname;
+
+                // check in form return if has some value given.
+                $fieldformkey = $profilefieldtpl->profilefieldkey;
+                if (empty($frm->$fieldformkey)) {
+                    // If at least one field is not provided, then let NOT pass to the next step.
+                    $template->step3disabled = 'disabled="disabled"';
+                }
+
+                if ($field->datatype == 'text' || $field->datatype == 'textarea') {
+                    $profilefieldtpl->istext = true;
+                    $profilefieldtpl->placeholder = format_text($field->description, $field->descriptionformat);
+                } else {
+                    $profilefieldtpl->islist = true;
+                    // Is a menu, get values to setup button options.
+
+                    $profilevalues = explode("\n", $field->param1);
+
+                    $j = 1;
+
+                    $haschecked = false;
+
+                    foreach ($profilevalues as $pv) {
+                        if (!empty(trim($pv))) {
+                            $profilevaluetpl = new StdClass;
+                            $profilevaluetpl->datavalue = $pv;
+                            $profilevaluetpl->j = $j;
+                            if (isset($frm->$profilefieldkey)  && ($frm->$profilefieldkey == $pv)) {
+                                $profilevaluetpl->selectedclass = 'selected';
+                                $haschecked = true;
+                                $profilevaluetpl->value = $pv;
+                            } else {
+                                $profilevaluetpl->selectedclass = '';
+                                $profilevaluetpl->value = '';
+                            }
+                            $profilevaluetpl->label = format_string($pv);
+                            $profilefieldtpl->profilevalues[] = $profilevaluetpl;
+                        }
+                        $j++;
+                    }
+
+                    if ($haschecked) {
+                        $profilefieldtpl->profileunchecked = '';
+                    } else {
+                        $profilefieldtpl->profileunchecked = 'unchecked';
+                    }
+                }
+
+                $template->profilefields[] = $profilefieldtpl;
             }
         }
 
@@ -159,9 +185,18 @@ class local_alternatelogin_renderer extends plugin_renderer_base {
         } else {
             $country = $CFG->country;
         }
+        if (!empty($config->withcountry)) {
+            $attrs = array('class' => 'field-non-empty-input unchecked');
+            $template->countryselect = html_writer::select(get_string_manager()->get_list_of_countries(), 'country', $country, array('' => 'choosedots'), $attrs);
+        } else {
+            $template->country = $country;
+        }
 
-        $attrs = array('class' => 'field-non-empty-input unchecked');
-        $template->countryselect = html_writer::select(get_string_manager()->get_list_of_countries(), 'country', $country, array('' => 'choosedots'), $attrs);
+        // Civility
+        if (!empty($config->civilityfieldid)) {
+            $template->withcivility = true;
+        }
+
         $template->passwordpolicy = print_password_policy();
 
         // Processing errors.

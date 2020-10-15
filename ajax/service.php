@@ -19,4 +19,18 @@ if ($action == 'checkpolicy') {
     }
 
     echo json_encode($result);
+    exit(0);
+}
+
+if ($action == 'checkcode') {
+    $authcode = required_param('code', PARAM_TEXT);
+    $config = get_config('local_alternatelogin');
+    $result = new StdClass;
+    $result->result = 0;
+    if (!empty($config->signupcode) && $config->signupcode == $authcode) {
+        $result->result = 1;
+    }
+
+    echo json_encode($result);
+    exit(0);
 }

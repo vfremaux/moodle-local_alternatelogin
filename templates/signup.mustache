@@ -56,6 +56,21 @@
                 <fieldset id="sign-up-panel-1" class="form-panel">
                 <legend>{{#str}}newaccount, local_alternatelogin{{/str}}</legend>
 
+                    {{#requiresignupcode}}
+                    <div class="form-element">
+                        {{#errorsignupcode}}
+                        <div class="form-error">{{errorsignupcode}}</div>
+                        {{/errorsignupcode}}
+                        <div id="id-field-authcode-field" class="form-field {{errorsignupcodeclass}}">
+                            <div>
+                                <input id="id-field-authcode-input" type="text" name="signupcode" value="{{signupcode}}"
+                                placeholder="{{#str}}signupcode, local_alternatelogin{{/str}}"
+                                 />
+                            </div>
+                        </div>
+                    </div>
+                    {{/requiresignupcode}}
+
                     <div class="form-element">
                         {{#erroremail}}
                         <div class="form-error">{{erroremail}}</div>
@@ -122,6 +137,12 @@
                         <div class="form-error">{{errorfirstname}}</div>
                         {{/errorfirstname}}
                         <div class="form-field {{errorfirstnameclass}}">
+                            {{#withcivility}}
+                            <select name="civility">
+                                <option value="mr">{{#str}}mr, local_alternatelogin{{/str}}</option>
+                                <option value="mrs">{{#str}}mrs, local_alternatelogin{{/str}}</option>
+                            </select>
+                            {{/withcivility}}
                             <input type="text" name="firstname" value="{{firstname}}" placeholder="{{#str}}firstname{{/str}}" class="field-non-empty-input unchecked">
                         </div>
                     </div>
@@ -145,6 +166,9 @@
                         </div>
                     </div>
                     {{/countryselect}}
+                    {{^countryselect}}
+                    <input type="hidden" name="country" value="{{country}}" />
+                    {{/countryselect}}
 
                     <div class="form-field">
                         <div class="field-flow">
@@ -155,16 +179,29 @@
 
                 <fieldset id="sign-up-panel-2" class="form-panel hidden">
 
-                    {{#profilefield}}
+                    {{#profilefields}}
+                        {{#islist}}
                         <input type="hidden" id="pv-{{i}}" name="{{profilefieldkey}}" value="{{value}}" class="alternate-profile-field {{profileunchecked}}">
-                        {{#profilevalue}}
+                        {{#profilevalues}}
                         <div class="form-field profile">
                             <div class="field-input">
                                 <input type="button" name="pv{{i}}btn" style="size: 30em" id="pv-choice-btn-{{i}}-{{j}}" data-value="{{datavalue}}" value="{{label}}" class="alternate-profile-choice {{selectedclass}}">
                             </div>
                         </div>
-                        {{/profilevalue}}
-                    {{/profilefield}}
+                        {{/profilevalues}}
+                        {{/islist}}
+
+                        {{#istext}}
+                        <div class="form-field profile">
+                            <div class="field-name">
+                            {{{profilefieldname}}}
+                            </div>
+                            <div class="field-input">
+                                <input type="text" name="{{profilefieldkey}}" style="size: 30em" placeholder="{{placeholder}}" class="alternate-profile-text">
+                            </div>
+                        </div>
+                        {{/istext}}
+                    {{/profilefields}}
 
                     {{#withcapcha}}
                     <div class="form-field">

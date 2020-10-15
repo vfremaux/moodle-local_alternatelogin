@@ -54,8 +54,14 @@ $string['configstylesheets'] = 'Feuilles de style';
 $string['configstylesheets_desc'] = 'La liste (à virgules) de feuilles de style du theme principal à appeler lorsque l\'en-tête est omise.';
 $string['configwelcometext'] = 'Texte de bienvenue';
 $string['configwelcometext_desc'] = 'Texte éventuel affiché en dessous des formulaires.';
+$string['configsignupcode'] = 'Code d\'inscription';
+$string['configsignupcode_desc'] = 'si défini, ajoute un champ de saisie d\'une clef d\'autorisation pour la création de profils.';
 $string['configwithcapcha'] = 'Activer le capcha';
 $string['configwithcapcha_desc'] = 'Si activé, ajoute un capcha de sécurité à la fin du formulaire.';
+$string['configwithcountry'] = 'Afficher le pays';
+$string['configwithcountry_desc'] = 'Si activé, permet de choisir le pays du profil.';
+$string['configcivilityfield'] = 'Champ de civilité';
+$string['configcivilityfield_desc'] = 'Un champ de profil personnalisé qui enregistre la civilité. La civilité n\'est pas présentée sinon.';
 $string['confirmpassword'] = 'Mot de passe (confirmation)';
 $string['defaultlogin'] = 'max.imum@gmail.com';
 $string['dologin'] = 'Identifiez-vous';
@@ -69,6 +75,8 @@ $string['errorexistsinternal'] = 'Cette adresse de courriel est déjà utilisée
 $string['errormalformed'] = 'L\'adresse de courriel est malformée.';
 $string['errornomatch'] = 'Les valeurs ne correspondent pas';
 $string['errorpasswordpolicy'] = 'Le mot de passe ne respecte pas les règles de sécurité demandées.';
+$string['erroremptysignupcode'] = 'Un code d\'autorisation est requis pour s\'inscrire.';
+$string['errorwrongsignupcode'] = 'Le code d\'autorisation n\est pas correct.';
 $string['login'] = 'Identifiant';
 $string['loginerror1'] = '<span data-error=\"{$a->error}\">Les cookies ne sont pas autorisés.</span>';
 $string['loginerror2'] = '<span data-error=\"{$a->error}\">L\'identifiant n\'est pas conforme aux règles locales de sécurité.</span>';
@@ -78,6 +86,8 @@ $string['loginerror5'] = '<span data-error=\"{$a->error}\">Ce compte n\'est pas 
 $string['loginerror6'] = '<span data-error=\"{$a->error}\">Cet identifiant n\'est pas connu.</span>';
 $string['loginerror99'] = '<span data-error=\"{$a->error}\">Erreur non répertoriée pour ce compte (ID \'{$a->error}\').</span>';
 $string['loginoremail'] = 'Identifiant (ou courriel)';
+$string['mr'] = 'M.';
+$string['mrs'] = 'Mme';
 $string['mydashboard'] = 'Mon tableau de bord';
 $string['newaccount'] = 'Nouveau compte';
 $string['newuser'] = 'Nouvel utilisateur';
@@ -85,9 +95,11 @@ $string['nopaste'] = 'Le copier/coller est interdit sur ces champs.';
 $string['send'] = 'Créer le compte';
 $string['signin'] = 'Se connecter';
 $string['signup'] = 'S\'inscrire';
+$string['signupcode'] = 'Entrez le code d\'autorisation';
 $string['sitealternatename'] = 'Plate-forme pédagogique';
 $string['tosignin'] = 'Passer à Se connecter';
 $string['tosignup'] = 'Passer à Créer un compte';
+$string['unset'] = '-- Non défini --';
 
 $string['emailconfirmationsubject'] = '{$a} - Confirmez votre compte';
 $string['confirminstructions'] = '

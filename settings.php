@@ -17,8 +17,7 @@
 /**
  * External database log store settings.
  *
- * @package    logstore_database
- * @copyright  2013 Petr Skoda {@link http://skodak.org}
+ * @package    local_alternatelogin
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -35,6 +34,12 @@ if ($hassiteconfig) {
     $label = get_string('configenabled', 'local_alternatelogin');
     $desc = get_string('configenabled_desc', 'local_alternatelogin');
     $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
+
+    $key = 'local_alternatelogin/signupcode';
+    $label = get_string('configsignupcode', 'local_alternatelogin');
+    $desc = get_string('configsignupcode_desc', 'local_alternatelogin');
+    $default = '';
+    $settings->add(new admin_setting_configtext($key, $label, $desc, $default));
 
     $key = 'local_alternatelogin/welcometext';
     $label = get_string('configwelcometext', 'local_alternatelogin');
@@ -91,12 +96,22 @@ if ($hassiteconfig) {
     $desc = get_string('configloginusesmail_desc', 'local_alternatelogin');
     $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 0));
 
-    $fields = $DB->get_records_menu('user_info_field', array('datatype' => 'menu'), 'name');
+    $select = " datatype = 'menu' OR datatype = 'text' OR datatype = 'textarea' ";
+    $fields = $DB->get_records_select_menu('user_info_field', $select, [], 'id,name');
+    $fields = ['' => get_string('unset', 'local_alternatelogin')] + $fields;
+
+    $key = 'local_alternatelogin/civilityfieldid';
+    $label = get_string('configcivilityfield', 'local_alternatelogin');
+    $desc = get_string('configcivilityfield_desc', 'local_alternatelogin');
+    $settings->add(new admin_setting_configselect($key, $label, $desc, 'alternateprofile', $fields));
+
     if (!empty($fields)) {
-        $key = 'local_alternatelogin/profilefield';
-        $label = get_string('configprofilefield', 'local_alternatelogin');
-        $desc = get_string('configprofilefield_desc', 'local_alternatelogin');
-        $settings->add(new admin_setting_configselect($key, $label, $desc, 'alternateprofile', $fields));
+        for ($i = 0; $i < 3; $i++) {
+            $key = 'local_alternatelogin/profilefield'.$i;
+            $label = get_string('configprofilefield', 'local_alternatelogin')." $i";
+            $desc = get_string('configprofilefield_desc', 'local_alternatelogin');
+            $settings->add(new admin_setting_configselect($key, $label, $desc, 'alternateprofile', $fields));
+        }
     }
 
     $key = 'local_alternatelogin/resultingauthmethod';
@@ -147,6 +162,11 @@ if ($hassiteconfig) {
     $key = 'local_alternatelogin/withcapcha';
     $label = get_string('configwithcapcha', 'local_alternatelogin');
     $desc = get_string('configwithcapcha_desc', 'local_alternatelogin');
+    $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
+
+    $key = 'local_alternatelogin/withcountry';
+    $label = get_string('configwithcountry', 'local_alternatelogin');
+    $desc = get_string('configwithcountry_desc', 'local_alternatelogin');
     $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
 
     $ADMIN->add('localplugins', $settings);

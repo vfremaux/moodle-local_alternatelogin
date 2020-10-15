@@ -33,17 +33,37 @@ class auth_plugin_email_alternate extends auth_plugin_email {
 
         user_add_password_history($user->id, $plainpassword);
 
+        // Save civility if required by alternate login.
+        if (!empty($config->civilityfieldname)) {
+            $userfield = $DB->get_record('user_info_field', ['id' => $config->civilityfieldid]);
+            $info = new StdClass;
+            $info->userid = $user->id;
+            $info->fieldid = $userfield->id;
+            $info->data = $user->civility;
+
+            $params = ['userid' => $info->userid, 'fieldid' => $info->fieldid];
+            if ($oldrecord = $DB->get_record('user_info_data', $params)) {
+                $info->id = $oldrecord->id;
+                $DB->update_record('user_info_data', $info);
+            } else {
+                $DB->insert_record('user_info_data', $info);
+            }
+        }
+
         // Save any custom profile field required by alternate login.
-        if (!empty($config->profilefield)) {
-            $field = $DB->get_record('user_info_field', array('id' => $config->profilefield));
-            if (!empty($field)) {
-                $profilefieldkey = 'profile_field_'.core_text::strtolower($field->shortname);
-                if (!empty($user->$profilefieldkey)) {
-                    $inforecord = new StdClass;
-                    $inforecord->fieldid = $field->id;
-                    $inforecord->userid = $user->id;
-                    $inforecord->data = $user->$profilefieldkey;
-                    $DB->insert_record('user_info_data', $inforecord);
+        for ($i = 0; $i < 3; $i++) {
+            $fieldkey = 'profilefield'.$i;
+            if (!empty($config->$fieldkey)) {
+                $field = $DB->get_record('user_info_field', array('id' => $config->$fieldkey));
+                if (!empty($field)) {
+                    $profilefieldkey = 'profile_field_'.core_text::strtolower($field->shortname);
+                    if (!empty($user->$profilefieldkey)) {
+                        $inforecord = new StdClass;
+                        $inforecord->fieldid = $field->id;
+                        $inforecord->userid = $user->id;
+                        $inforecord->data = $user->$profilefieldkey;
+                        $DB->insert_record('user_info_data', $inforecord);
+                    }
                 }
             }
         }

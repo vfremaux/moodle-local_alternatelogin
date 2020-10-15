@@ -74,6 +74,7 @@ if (!empty($frm)) {
 
         $user->username = $frm->email;
         $user->confirmed = false;
+
         /*
         // User_signup does hashing.
         $user->password = hash_internal_user_password($frm->password);

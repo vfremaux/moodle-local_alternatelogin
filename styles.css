@@ -120,6 +120,7 @@ body {
 }
 
 .alternate-page .signup .form-element .unchecked input,
+.alternate-page .signup .form-element .error input,
 .alternate-page .signup .form-element .unchecked select,
 .alternate-page .signup select.unchecked,
 .alternate-page .signup input.unchecked {
@@ -200,6 +201,7 @@ body {
 .field-cpy-check img {
     float: right;
     height:30px;
+    width:26px;
 }
 
 .alternate-page  .login input[type="button"],
