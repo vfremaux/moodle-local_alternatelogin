@@ -76,7 +76,7 @@ define(['jquery', 'core/config', 'core/log'], function($, cfg, log) {
 
             var that = $(this);
 
-            var url = cfg.wwwroot.'/local/alternatelogin/ajax/service.php';
+            var url = cfg.wwwroot + '/local/alternatelogin/ajax/service.php';
             url += '?what=checkcode';
             url += '&code=' + that.val();
 
