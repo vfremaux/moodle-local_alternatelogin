@@ -24,7 +24,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
-    $settings = new admin_settingpage('local_alternatelogin', get_string('pluginname', 'local_alternatelogin'));
+    $settings = new admin_settingpage('localsettingalternatelogin', get_string('pluginname', 'local_alternatelogin'));
 
     $loginlink = new moodle_url('/local/alternatelogin/login.php');
     $help = get_string('alternatelogin_help', 'local_alternatelogin', ''.$loginlink);
@@ -114,6 +114,22 @@ if ($hassiteconfig) {
         }
     }
 
+    $key = 'local_alternatelogin/withcapcha';
+    $label = get_string('configwithcapcha', 'local_alternatelogin');
+    $desc = get_string('configwithcapcha_desc', 'local_alternatelogin');
+    $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
+
+    $key = 'local_alternatelogin/withcountry';
+    $label = get_string('configwithcountry', 'local_alternatelogin');
+    $desc = get_string('configwithcountry_desc', 'local_alternatelogin');
+    $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
+
+    $key = 'local_alternatelogin/needsconfirm';
+    $label = get_string('configneedsconfirm', 'local_alternatelogin');
+    $desc = get_string('configneedsconfirm_desc', 'local_alternatelogin');
+    $default = 0;
+    $settings->add(new admin_setting_configcheckbox($key, $label, $desc, $default));
+
     $key = 'local_alternatelogin/resultingauthmethod';
     $label = get_string('configresultingauthmethod', 'local_alternatelogin');
     $desc = get_string('configresultingauthmethod_desc', 'local_alternatelogin');
@@ -159,15 +175,12 @@ if ($hassiteconfig) {
     $desc = get_string('confignofooter_desc', 'local_alternatelogin');
     $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
 
-    $key = 'local_alternatelogin/withcapcha';
-    $label = get_string('configwithcapcha', 'local_alternatelogin');
-    $desc = get_string('configwithcapcha_desc', 'local_alternatelogin');
-    $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
+    $settings->add(new admin_setting_heading('alternatelogin_notifications', get_string('notifications', 'local_alternatelogin'), ''));
 
-    $key = 'local_alternatelogin/withcountry';
-    $label = get_string('configwithcountry', 'local_alternatelogin');
-    $desc = get_string('configwithcountry_desc', 'local_alternatelogin');
-    $settings->add(new admin_setting_configcheckbox($key, $label, $desc, 1));
+    $key = 'local_alternatelogin/notifyusers';
+    $label = get_string('confignotifyusers', 'local_alternatelogin');
+    $desc = get_string('confignotifyusers_desc', 'local_alternatelogin');
+    $settings->add(new admin_setting_configtext($key, $label, $desc, ''));
 
     $ADMIN->add('localplugins', $settings);
 }

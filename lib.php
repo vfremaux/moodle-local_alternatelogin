@@ -108,6 +108,66 @@ function local_alternatelogin_send_confirmation_email($user) {
     return email_to_user($user, $supportuser, $subject, $message, $messagehtml);
 }
 
+/**
+ * Send email to supportuser with notification of the created account.
+ *
+ * @param stdClass $user A {@link $USER} object
+ * @param stdClass $usercustomdata Additional custom fields collected.
+ * @return bool Returns true if mail was sent OK and false if there was an error.
+ */
+function local_alternatelogin_send_notification_email($user, $usercustomdata = []) {
+    global $CFG, $DB;
+
+    $config = get_config('local_alternatelogin');
+
+    // Get full user data.
+    $user = $DB->get_record('user', array('id' => $user->id));
+
+    $site = get_site();
+
+    $users = [];
+    $targets = preg_split('/[\\s,]+/', $config->notifyusers);
+    foreach ($targets as $t) {
+        if (is_numeric($t)) {
+            $user = $DB->get_record('user', ['id' => $t]);
+            if ($user) {
+                $users[] = $user;
+            }
+        } else {
+            $user = $DB->get_record('user', ['username' => $t]);
+            if ($user) {
+                $users[] = $user;
+            }
+        }
+    }
+
+    $data = new stdClass();
+    $data->name = fullname($user);
+    $data->username = $user->username;
+    $data->email = $user->email;
+    $data->sitename  = format_string($site->fullname);
+
+    $lines = [];
+    if (!empty($usercustomdata)) {
+        foreach ($usercustomdata as $name => $value) {
+            $lines[] = "$name : $value \n";
+        }
+    }
+    $data->extradata = implode('', $lines);
+
+    $subject = get_string('emailnotificationsubject', 'local_alternatelogin', $data);
+
+    $message     = get_string('emailnotification', 'local_alternatelogin', $data);
+    $messagehtml = text_to_html(get_string('emailnotification', 'local_alternatelogin', $data), false, false, true);
+
+    $user->mailformat = 1;  // Always send HTML version as well.
+
+    // Directly email rather than using the messaging system to ensure its not routed to a popup or jabber.
+    foreach ($supportusers as $u) {
+        return email_to_user($u, $user, $subject, $message, $messagehtml);
+    }
+}
+
 function local_alternatelogin_validate($user) {
     global $DB, $SESSION;
 
@@ -196,3 +256,4 @@ function local_alternatelogin_validate($user) {
 
     return $errors;
 }
+

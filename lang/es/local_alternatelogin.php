@@ -56,6 +56,7 @@ $string['confirmpassword'] = 'Contrase&ntilde;a (confirmaci&oacute;n)';
 $string['accountcreated'] = 'Cuenta creada';
 $string['arialabel'] = 'Icono de sitio';
 $string['close'] = 'Cerrar';
+$string['unset'] = 'Sin definir';
 
 $string['emailconfirmationsubject'] = '{$a} - Confirma su cuenta';
 $string['confirminstructions'] = '

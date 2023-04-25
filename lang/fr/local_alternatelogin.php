@@ -43,6 +43,10 @@ $string['confignofooter_desc'] = 'Si actif, n\'imprime pas le pied de page';
 $string['confignoheader'] = 'Sans en-tête';
 $string['confignoheader_desc'] = 'Si actif, n\'imprime pas le haut de page';
 $string['configprofilefield'] = 'Champ de profil';
+$string['configneedsconfirm'] = 'Confirmation nécessaire';
+$string['configneedsconfirm_desc'] = 'Si activé, les comptes sont créés "non confirmés"';
+$string['confignotifyusers'] = 'Utilisateurs à notifier';
+$string['confignotifyusers_desc'] = 'Si une liste d\' id numériques ou d\'identifiants d\'utilisateurs est donnée, envoie un message de notification de creation de compte à ces utilisateurs.';
 $string['configprofilefield_desc'] = 'Nom court du champ de profil pour les options du deuxième panneau d\'enregistrement';
 $string['configrendererimages'] = 'Images pour la mise en page';
 $string['configrendererimages_desc'] = 'Une collection d\'images qui peuvent être appelées dans les CSS supplémentaires, avec des balises {{#pluginfile}}<nomfichier>{{/pluginfile}}';
@@ -92,6 +96,7 @@ $string['mydashboard'] = 'Mon tableau de bord';
 $string['newaccount'] = 'Nouveau compte';
 $string['newuser'] = 'Nouvel utilisateur';
 $string['nopaste'] = 'Le copier/coller est interdit sur ces champs.';
+$string['notifications'] = 'Notifications';
 $string['send'] = 'Créer le compte';
 $string['signin'] = 'Se connecter';
 $string['signup'] = 'S\'inscrire';
@@ -113,4 +118,14 @@ $string['emailconfirmation'] = '
 Vous avez un compte en attente de confirmation.
 
 Pour confirmer votre compte, Rendez vous sur le lien suivant et suivez les instructions : {$a->link}
+';
+
+$string['emailnotificationsubject'] = '[{$a->sitename}] - Compte utilisateur créé';
+$string['emailnotification'] = '
+[{$a->sitename}] - Compte utilisateur créé
+
+Créé par {$a->name}
+Identifiant : {$a->username}
+courriel : $a->email
+{$a->extradata}
 ';
