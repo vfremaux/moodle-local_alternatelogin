@@ -41,6 +41,10 @@ $string['confignofooter'] = 'No footer';
 $string['confignofooter_desc'] = 'If enabled, will not print the footer';
 $string['confignoheader'] = 'No header';
 $string['confignoheader_desc'] = 'If enabled, will not print the header';
+$string['configneedsconfirm'] = 'Needs account confirmation';
+$string['configneedsconfirm_desc'] = 'If enabled, accounts will be created unconfirmed.';
+$string['confignotifyusers'] = 'Users to notify';
+$string['confignotifyusers_desc'] = 'If set as a list of user\'s numeric ids or usernames, sends a user creation notification to those users.';
 $string['configprofilefield'] = 'Profile field for values';
 $string['configprofilefield_desc'] = 'Shortname of a profile field that provides choices for panel 2 of signup';
 $string['configrendererimages'] = 'Renderer images';
@@ -91,6 +95,7 @@ $string['mrs'] = 'Mrs';
 $string['newaccount'] = 'New account';
 $string['newuser'] = 'New user';
 $string['nopaste'] = 'Copy/paste are disabled on these fields';
+$string['notifications'] = 'Notifications';
 $string['pluginname'] = 'Alternate login page';
 $string['send'] = 'Create the account';
 $string['signin'] = 'Sign in';
@@ -114,4 +119,12 @@ Your account is waiting for you.
 Please follow this link to confirm your account: {$a->link}
 ';
 
+$string['emailnotificationsubject'] = '[{$a->sitename}] - User account created';
+$string['emailnotification'] = '
+[{$a->sitename}] - User account created
 
+Created by {$a->name}
+Username : {$a->username}
+Email : {$a->email}
+{$a->extradata}
+';

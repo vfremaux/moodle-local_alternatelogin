@@ -1,0 +1,138 @@
+{{!
+    This file is part of The Alternatelogin local
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_alternatelogin/login
+
+    Block template for displaying the sharedresources tool list
+
+    Classes required for JS:
+    * none
+
+    Context variables required for this template:
+    * undocumented @see block's renderer for reference
+}}
+<!-- local_alternatelogin/login -->
+<div id="custommenu">
+
+<!-- logo -->
+<a href="{{{ config.wwwroot }}}" class="navbar-brand {{# output.should_display_navbar_logo }}has-logo{{/ output.should_display_navbar_logo }}
+    {{^ output.should_display_navbar_logo }}
+        d-none d-sm-inline
+    {{/ output.should_display_navbar_logo }}
+        ">
+    {{# output.should_display_navbar_logo }}
+        <span class="logo d-none d-sm-inline">
+            <img src="{{output.get_compact_logo_url}}" alt="Logo {{sitename}}" aria-label="{{#str}}arialabel, local_alternatelogin{{/str}}">
+        </span>
+        <span class="sitename alternate-name" aria-hidden="true">{{#str}}sitealternatename, local_alternatelogin{{/str}}</span>
+    {{/ output.should_display_navbar_logo }}
+    <span class="site-name d-none d-md-inline">{{{ sitename }}}</span>
+</a>
+
+<!-- /logo -->
+
+
+<div id="custommenu-inner">
+{{{custommenu}}}
+</div>
+</div>
+
+<!-- div id="extra-div-1">{{{extra1text}}}</div>
+<div id="extra-div-2">{{{extra2text}}}</div -->
+
+<div id="login-page" class="alternate-page">
+
+    {{#extracss}}
+    <style>{{{extracss}}}</style>
+    {{/extracss}}
+
+    <div id="alternate-login-content">
+        {{#welcometext}}
+        <div id="login-welcome" class="welcome">
+            {{{welcometext}}}
+        </div>
+        {{/welcometext}}
+
+        <form name="login" class="login-form" method="POST" role="form" action="{{{loginindexurl}}}" aria-labelledby="form-fieldset-legend">
+          <section class="euno-bkg">
+              <div class="login login-form-part half-screen eunomie-login" tabindex="0">
+                  <div class="login-forms">
+                      <a name="loginsignin"></a>
+
+                      {{#error}}
+                      {{{errornotification}}}
+                      {{/error}}
+
+                      <div class="form-fieldset">
+                      <fieldset>
+                          <legend id="form-fieldset-legend">{{#str}}dologin, local_alternatelogin{{/str}}</legend>
+                          <label id="form-fieldset-label-login" for="username">{{#str}}login, local_alternatelogin{{/str}}</label>
+                          {{#loginusesmail}}
+                          <span id="infomail">
+                              <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                              <span class="info-title">{{loginstr}}</span>
+                          </span>
+                          {{/loginusesmail}}
+                          <input type="text" aria-labelledby="form-fieldset-label-login" aria-describedby="infomail" name="username" value="" size="16" placeholder="{{#str}}defaultlogin, local_alternatelogin{{/str}}">
+
+                          <label id="form-fieldset-label-password" for="password"></label>
+                          <span id="infopassword">
+                              <span><i class="fa fa-lock" aria-hidden="true"></i></span>
+                              <span class="info-title">{{#str}}password{{/str}}</span>
+                          </span>
+                          <input type="password" aria-labelledby="form-fieldset-label-password" aria-describedby="infopassword" name="password" size="8">
+                      </fieldset>
+                      </div>
+                  </div>
+
+                  <div class="login-buttons">
+                      <div id="login-button">
+                          <input type="submit"  role="button" name="go_login" value="{{#str}}signin, local_alternatelogin{{/str}}">
+                      </div>
+
+                      <div id="forgetpass-button">
+                          <a href="{{{forgotpassurl}}}"><input type="button" role="button" class="pretty-button" name="go_forgotten" value="{{#str}}forgotten{{/str}}"></a>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="login login-form-part half-screen eunomie-subscribe" tabindex="0">
+
+                  <div class="login-forms-eunomie">
+                      <a name="loginsignup"></a>
+                      <!--<h2>{{#str}}newuser, local_alternatelogin{{/str}}</h2>-->
+                      <h3>{{#str}}eunomie, local_alternatelogin{{/str}}</h3>
+                      <div id="signup-text">
+                          {{{referertext}}}
+                      </div>
+                  </div>
+
+                  <div class="login-buttons" style="display:flex; justify-content: center; flex-direction: column;">
+                      <div id="signup-button">
+                          <a href="{{{signupurlreferer}}}"><input type="button" role="button" class="pretty-button" name="go_eunomie" value="{{#str}}signupreferer, local_alternatelogin{{/str}}" style="background:#40173f !important;"></a>
+                      </div>
+                    </div>
+              </div>
+            </section>
+        </form>
+    </div>
+</div>
+
+<!-- div id="extra-div-3">{{{extra3text}}}</div>
+<div id="extra-div-4">{{{extra4text}}}</div -->
+
+<!-- /local_alternatelogin/login -->

@@ -3,6 +3,8 @@
 defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot.'/auth/email/auth.php');
+require_once($CFG->dirroot.'/user/profile/lib.php');
+require_once($CFG->dirroot.'/user/lib.php');
 
 /**
  * Email authentication plugin.
@@ -20,8 +22,11 @@ class auth_plugin_email_alternate extends auth_plugin_email {
 
         $config = get_config('local_alternatelogin');
 
-        require_once($CFG->dirroot.'/user/profile/lib.php');
-        require_once($CFG->dirroot.'/user/lib.php');
+        if (!empty($config->needsconfirm)) {
+            $user->confirmed = 0;
+        } else {
+            $user->confirmed = 1;
+        }
 
         $plainpassword = $user->password;
         $user->password = hash_internal_user_password($user->password);
@@ -50,6 +55,7 @@ class auth_plugin_email_alternate extends auth_plugin_email {
             }
         }
 
+        $usercustomdata = [];
         // Save any custom profile field required by alternate login.
         for ($i = 0; $i < 3; $i++) {
             $fieldkey = 'profilefield'.$i;
@@ -63,6 +69,8 @@ class auth_plugin_email_alternate extends auth_plugin_email {
                         $inforecord->userid = $user->id;
                         $inforecord->data = $user->$profilefieldkey;
                         $DB->insert_record('user_info_data', $inforecord);
+                        // Adds data for notification.
+                        $usercustomdata[$field->name] = $user->$profilefieldkey;
                     }
                 }
             }
@@ -70,6 +78,10 @@ class auth_plugin_email_alternate extends auth_plugin_email {
 
         // Trigger event.
         \core\event\user_created::create_from_userid($user->id)->trigger();
+
+        if (!empty($config->notifyusers)) {
+            local_alternatelogin_send_notification_email($user, $usercustomdata);
+        }
 
         if (! local_alternatelogin_send_confirmation_email($user)) {
             if ($CFG->debug == DEBUG_DEVELOPER) {

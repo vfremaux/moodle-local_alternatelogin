@@ -44,6 +44,7 @@ $renderer = $PAGE->get_renderer('local_alternatelogin');
 
 if (empty($config->noheader)) {
     $PAGE->set_pagelayout('login');
+    $PAGE->add_body_class('local-alternatelogin-login');
     echo $OUTPUT->header();
 } else {
     $PAGE->set_pagelayout('embedded');
